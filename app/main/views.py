@@ -2,7 +2,8 @@ from flask import render_template, url_for,flash,redirect
 from ..forms import RegistrationForm, LoginForm
 # from flask_wtf import FlaskForm
 from app.main import main
-from ..models import User
+from  app.models import User
+from flask_login import current_user, login_user,logout_user
 
 
 pitch = [
@@ -43,3 +44,13 @@ def login():
     else:
         flash(f'Login Unsuccessful. Email or Password is incorrect', 'danger')
     return render_template('login.html', title='Login', form = form)
+
+@main.route('/logout')
+def logout():
+    '''
+    Function that handles logout
+    Returns:
+        Log out user to login page
+    '''
+    logout_user()
+    return redirect(url_for('main.index'))
