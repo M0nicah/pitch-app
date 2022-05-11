@@ -29,7 +29,7 @@ def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f'Account successfully created for {form.username.data}', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     return render_template('signup.html', title='Register', form = form)
 
 
@@ -39,7 +39,7 @@ def login():
     if form.validate_on_submit():
         if form.email.data == 'test@blog.com' and form.password.data == 'password':
             flash(f'Login Successfull', 'success')
-            return redirect(url_for('index'))
+            return redirect(url_for('main.index'))
     else:
         flash(f'Login Unsuccessful. Email or Password is incorrect', 'danger')
     return render_template('login.html', title='Login', form = form)
