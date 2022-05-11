@@ -31,6 +31,8 @@ def index():
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data, password_hash=form.password.data)
+        user.set_password(form.password.data)
         flash(f'Account successfully created for {form.username.data}', 'success')
         return redirect(url_for('main.index'))
     return render_template('signup.html', title='Register', form = form)
@@ -40,7 +42,7 @@ def signup():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
             flash(f'Login Successfull', 'success')
             return redirect(url_for('main.index'))
