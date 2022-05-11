@@ -9,12 +9,13 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
-
+login = LoginManager()
+login.login_view = 'main.login'
 
 def createapp(config_class=Config):
 
     app = Flask(__name__)
-    login = LoginManager(app)
+    
 
     # Setting up configuration
     app.config.from_object(config_class)
@@ -25,6 +26,7 @@ def createapp(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
+    login.init_app(app) 
 
     # Registering the blueprint
     from .main import main as main_blueprint

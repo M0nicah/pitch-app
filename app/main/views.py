@@ -3,7 +3,7 @@ from ..forms import RegistrationForm, LoginForm
 # from flask_wtf import FlaskForm
 from app.main import main
 from  app.models import User
-from flask_login import current_user, login_user,logout_user
+from flask_login import current_user, login_required, login_user,logout_user
 
 
 pitch = [
@@ -22,6 +22,8 @@ pitch = [
 ]
 
 @main.route("/")
+@main.route("/index")
+@login_required
 def index():
     return render_template('index.html', pitch=pitch)
 
@@ -38,7 +40,8 @@ def signup():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'test@blog.com' and form.password.data == 'password':
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
             flash(f'Login Successfull', 'success')
             return redirect(url_for('main.index'))
     else:
