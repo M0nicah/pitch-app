@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{%block content%}
+    {% for pitch in pitch %}
+    <h1>{{ pitch.title }}</h1>
+    <p>Author: {{ pitch.author }}</p>
+    <p>📌 {{ pitch.message }}</p>
+    <p> Posted on {{pitch.date}}</p>
+    {% endfor %}
+{% endblock %}
+
+<h1>hello monica</h1>

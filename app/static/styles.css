@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
+.container{
+    color: black;
+}
+.signup{
+   color: #101935;
+}
+.login{
+    color: #101935;
+}
+.font{
+    font-family: 'Space Mono', monospace;
+}
+.form-section{
+    background-color: #101935;
+    height: 100vh;
+    width: 100vw;
+}
+.form-container{
+    border-radius: 40px;
+    background: linear-gradient(145deg, #564787, #DBCBD8);
+    box-shadow: 9px 9px 13px #564787, -9px -9px 13px #DBCBD8;
+}
