@@ -1,17 +1,20 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from .config import Config
+from config import Config
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
 
+
 def createapp(config_class=Config):
 
     app = Flask(__name__)
+    login = LoginManager(app)
 
     # Setting up configuration
     app.config.from_object(config_class)
