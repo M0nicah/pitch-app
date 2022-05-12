@@ -1,6 +1,6 @@
 from flask import render_template, url_for,flash,redirect
 from ..forms import RegistrationForm, LoginForm
-# from flask_wtf import FlaskForm
+from app import db
 from app.main import main
 from  app.models import User
 from flask_login import current_user, login_required, login_user,logout_user
@@ -23,7 +23,7 @@ pitch = [
 
 @main.route("/")
 @main.route("/index")
-@login_required
+# @login_required
 def index():
     return render_template('index.html', pitch=pitch)
 
@@ -33,6 +33,8 @@ def signup():
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, password_hash=form.password.data)
         user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
         flash(f'Account successfully created for {form.username.data}', 'success')
         return redirect(url_for('main.index'))
     return render_template('signup.html', title='Register', form = form)
@@ -40,6 +42,8 @@ def signup():
 
 @main.route("/login", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index')) #prevents the user from double logging in
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()

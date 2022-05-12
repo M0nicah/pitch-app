@@ -4,7 +4,6 @@ from app.models import User, Pitch
 # Creating app instance
 app = createapp()
 
-@app.command
 def test():
     """Run the unit tests"""
     import unittest

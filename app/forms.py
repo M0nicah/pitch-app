@@ -21,3 +21,8 @@ class LoginForm(FlaskForm):
 def validate_username(self, username):
     if User.query.filter_by(username=username.data).first():
         raise ValidationError("Username already taken!")
+
+def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email address.')
