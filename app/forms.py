@@ -1,3 +1,4 @@
+from turtle import title
 from click import confirm
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
@@ -16,6 +17,14 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit_form = SubmitField('Log in')
+
+class PitchForm(FlaskForm):
+    '''
+    Class that handles pitch creation buy users
+    '''
+    title = StringField('Title', validators=[DataRequired])
+    body = StringField('Enter your pitch', validators=[DataRequired()])
+    submit = SubmitField('Post') 
 
 
 def validate_username(self, username):
