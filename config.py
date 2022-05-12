@@ -12,16 +12,3 @@ class Config():
 
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 
-class ProdConfig(Config):
-    
-    pass
-
-
-class DevConfig(Config):
-
-    DEBUG = True
-
-config_options = {
-'development':DevConfig,
-'production':ProdConfig
-}
