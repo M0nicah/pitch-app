@@ -62,7 +62,7 @@ def logout():
     return redirect(url_for('main.index'))
     
 @main.route('/pitch/new', methods=['GET', 'POST'] )
-def new_post():
+def new_pitch():
     form=PitchForm()
     if form.validate_on_submit():
         pitch = Pitch(title=form.title.data, body=form.body.data, author=User)
@@ -70,7 +70,7 @@ def new_post():
         db.session.commit()
         flash('Your Pitch has been posted successfully!', 'success')
         return redirect(url_for('main.index'))
-    return render_template('pitch.html',title='New Pitch', form=form)
+    return render_template('pitches.html',title='New Pitch', form=form)
     
 
 # @main.route('/user/<username>')
