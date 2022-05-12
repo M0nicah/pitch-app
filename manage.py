@@ -2,7 +2,7 @@ from app import createapp,db
 from app.models import User, Pitch
 
 # Creating app instance
-app = createapp()
+app = createapp('production')
 
 def test():
     """Run the unit tests"""
