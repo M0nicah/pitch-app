@@ -22,7 +22,7 @@ class PitchForm(FlaskForm):
     '''
     Class that handles pitch creation buy users
     '''
-    title = StringField('Title', validators=[DataRequired])
+    title = StringField('Title', validators=[DataRequired()])
     body = StringField('Enter your pitch', validators=[DataRequired()])
     submit = SubmitField('Post') 
 

@@ -5,20 +5,20 @@ from app.main import main
 from  app.models import User, Pitch
 from flask_login import current_user, login_required, login_user,logout_user
 
-# pitch = [
-#     {
-#         'author': 'Test User',
-#         'title': 'Test Pitch',
-#         'message': 'Test Tester Testing',
-#         'date': 'May 6, 2020'
-#     },
-#     {
-#         'author': 'John User',
-#         'title': 'Johns Pitch',
-#         'message': 'John Tester Testing',
-#         'date': 'May 2, 2020'
-#     }
-# ]
+pitch = [
+    {
+        'author': 'Test User',
+        'title': 'Test Pitch',
+        'body': 'Test Tester Testing',
+        'date_posted': 'May 6, 2020'
+    },
+    {
+        'author': 'John User',
+        'title': 'Johns Pitch',
+        'body': 'John Tester Testing',
+        'date_posted': 'May 2, 2020'
+    }
+]
 
 @main.route("/", methods=['GET', 'POST'])
 @main.route("/index", methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def index():
         return redirect(url_for('main.index'))
     all_pitches = Pitch.query.order_by(Pitch.date_posted.desc()).all()
 
-    return render_template('index.html', form=form, Pitch=Pitch)
+    return render_template('index.html', form=form)
 
 @main.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -72,14 +72,17 @@ def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
-@main.route('/post/newPost', methods=['GET', 'POST'] )
+@main.route('/pitch/new', methods=['GET', 'POST'] )
 @login_required
 def new_post():
     form=PitchForm()
     if form.validate_on_submit():
+        pitch = Pitch(title=form.title.data, content=form.content.data, author=current_user)
+        db.session.add(pitch)
+        db.session.commit()
         flash('Your Pitch has been posted successfully!', 'success')
         return redirect(url_for('main.index'))
-    return render_template('_pitch.html',title='New Pitch', form=form)
+    return render_template('pitch.html',title='New Pitch', form=form)
     
 
 # @main.route('/user/<username>')
