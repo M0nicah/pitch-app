@@ -1,5 +1,6 @@
 
 from ensurepip import bootstrap
+import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
@@ -18,8 +19,6 @@ bootstrap = Bootstrap()
 def createapp(config_class=Config):
 
     app = Flask(__name__)
-    
-
     # Setting up configuration
     app.config.from_object(config_class)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -35,5 +34,14 @@ def createapp(config_class=Config):
     # Registering the blueprint
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+
+    if not app.debug and not app.testing:
+    #heroku logs to stdout
+        if app.config['LOG_TO_STDOUT']:
+            stream_handler = logging.StreamHandler()
+            stream_handler.setLevel(logging.INFO)
+            app.logger.addHandler(stream_handler)
+            # End of Heroku stdout logs
+
 
     return app

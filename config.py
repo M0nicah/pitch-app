@@ -10,6 +10,7 @@ class Config():
         'postgres://', 'postgresql://') or\
         'sqlite:///' + os.path.join(basedir, 'pitchapp.db')
 
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 
 class ProdConfig(Config):
     

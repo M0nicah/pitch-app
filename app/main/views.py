@@ -69,7 +69,7 @@ def logout():
 def new_pitch():
     form=PitchForm()
     if form.validate_on_submit():
-        pitch = Pitch(title=form.title.data, body=form.body.data, author=form.user_id.data)
+        pitch = Pitch(title=form.title.data, body=form.body.data)
         db.session.add(pitch)
         db.session.commit()
         flash('Your Pitch has been posted successfully!', 'success')
