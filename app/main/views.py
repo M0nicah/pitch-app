@@ -19,21 +19,10 @@ pitch = [
         'date_posted': 'May 2, 2020'
     }
 ]
-
-@main.route("/", methods=['GET', 'POST'])
-@main.route("/index", methods=['GET', 'POST'])
-# @login_required
+@login_required
+@main.route("/")
 def index():
-    form = PitchForm()
-    if form.validate_on_submit():
-        pitch = Pitch(body=form.body.data, author=current_user)
-        db.session.add(pitch)
-        db.session.commit()
-        flash('Your pitch has been uploaded')
-        return redirect(url_for('main.index'))
-    all_pitches = Pitch.query.order_by(Pitch.date_posted.desc()).all()
-
-    return render_template('index.html', form=form)
+    return render_template('index.html', pitch=pitch)
 
 @main.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -55,7 +44,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user is None or not user.check_password(form.password.data):
+        if user and user.check_password(user.password, form.password.data):
             flash(f'Login Successfull', 'success')
             return redirect(url_for('main.index'))
     else:
@@ -71,13 +60,12 @@ def logout():
     '''
     logout_user()
     return redirect(url_for('main.index'))
-
+    
 @main.route('/pitch/new', methods=['GET', 'POST'] )
-@login_required
 def new_post():
     form=PitchForm()
     if form.validate_on_submit():
-        pitch = Pitch(title=form.title.data, content=form.content.data, author=current_user)
+        pitch = Pitch(title=form.title.data, body=form.body.data, author=User)
         db.session.add(pitch)
         db.session.commit()
         flash('Your Pitch has been posted successfully!', 'success')
