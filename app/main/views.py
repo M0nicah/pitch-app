@@ -51,7 +51,7 @@ def login():
             flash(f'Login Successfull', 'success')
             return redirect(url_for('main.index'))
     else:
-        flash(f'Login Unsuccessful. Email or Password is incorrect', 'danger')
+        flash(f'Enter credentials to log in', 'danger')
     return render_template('login.html', title='Login', form = form)
 
 @main.route('/logout')
@@ -63,3 +63,13 @@ def logout():
     '''
     logout_user()
     return redirect(url_for('main.index'))
+
+# @main.route('/user/<username>')
+# @login_required
+# def user(username):
+#     user = User.query.filter_by(username=username).first_or_404()
+#     posts = [
+#         {'author': user, 'body': 'Test post #1'},
+#         {'author': user, 'body': 'Test post #2'}
+#     ]
+#     return render_template('user.html', user=user, posts=posts)
