@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
 
+
+#tester{
+    background-color: #101935;
+}
 .container{
     color: black;
 }
@@ -22,3 +26,7 @@
     background: linear-gradient(145deg, #564787, #DBCBD8);
     box-shadow: 9px 9px 13px #564787, -9px -9px 13px #DBCBD8;
 }
+
+/* .font{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+} */

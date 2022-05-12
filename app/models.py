@@ -4,6 +4,11 @@ from flask_login import UserMixin
 from app import login
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
 # database tables
 class User(UserMixin, db.Model):
     def set_password(self, password):
@@ -33,7 +38,3 @@ class Pitch(db.Model):
         return f"Pitch('{self.title}', '{self.date_posted}')"
 
 
-
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))

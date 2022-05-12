@@ -22,6 +22,7 @@ pitch = [
 @login_required
 @main.route("/")
 def index():
+    pitch = Pitch.query.all()
     return render_template('index.html', pitch=pitch)
 
 @main.route("/signup", methods=['GET', 'POST'])
@@ -44,7 +45,9 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and user.check_password(user.password, form.password.data):
+        if user.email == form.email.data:
+
+        # if user is not None and user.check_password(form.password.data):
             flash(f'Login Successfull', 'success')
             return redirect(url_for('main.index'))
     else:
@@ -60,25 +63,15 @@ def logout():
     '''
     logout_user()
     return redirect(url_for('main.index'))
-    
+
+
 @main.route('/pitch/new', methods=['GET', 'POST'] )
 def new_pitch():
     form=PitchForm()
     if form.validate_on_submit():
-        pitch = Pitch(title=form.title.data, body=form.body.data, author=User)
+        pitch = Pitch(title=form.title.data, body=form.body.data, author=form.user_id.data)
         db.session.add(pitch)
         db.session.commit()
         flash('Your Pitch has been posted successfully!', 'success')
         return redirect(url_for('main.index'))
     return render_template('pitches.html',title='New Pitch', form=form)
-    
-
-# @main.route('/user/<username>')
-# @login_required
-# def user(username):
-#     user = User.query.filter_by(username=username).first_or_404()
-#     posts = [
-#         {'author': user, 'body': 'Test post #1'},
-#         {'author': user, 'body': 'Test post #2'}
-#     ]
-#     return render_template('user.html', user=user, posts=posts)
