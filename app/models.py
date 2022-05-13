@@ -36,6 +36,6 @@ class Pitch(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return f"Pitch('{self.title}', '{self.date_posted}')"
+        return f"Pitch('{self.title}', '{self.date_posted}', '{self.body}')"
 
 
