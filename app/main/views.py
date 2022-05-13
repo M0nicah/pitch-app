@@ -33,13 +33,13 @@ def index():
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, password_hash=form.password.data)
+        user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash(f'Account successfully created for {form.username.data}', 'success')
-        return redirect(url_for('main.index'))
-    return render_template('signup.html', title='Register', form = form)
+        return redirect(url_for('main.login'))
+    return render_template('signup.html', title='Register', form=form)
 
 
 @main.route("/login", methods=['GET', 'POST'])
@@ -49,12 +49,13 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user.email == form.email.data:
-            flash(f'Login Successfull', 'success')
-            return redirect(url_for('main.index'))
-    else:
-        flash(f'Enter credentials to log in', 'danger')
-    return render_template('login.html', title='Login', form = form)
+        if user is None or not user.check_password(form.password.data):
+            flash(f'Not successfull', 'danger')
+            return redirect(url_for('main.login'))
+        login_user(user)    
+        flash(f'Login Successful', 'success')
+        return redirect(url_for ('main.index'))
+    return render_template('login.html', title='Login', form=form)
 
 @main.route('/logout')
 def logout():
@@ -64,7 +65,7 @@ def logout():
         Log out user to login page
     '''
     logout_user()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.login'))
 
 
 @main.route('/pitch/new', methods=['GET', 'POST'] )
@@ -79,35 +80,34 @@ def new_pitch():
     return render_template('pitches.html',title='New Pitch', form=form)
 
 
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+# def save_picture(form_picture):
+#     random_hex = secrets.token_hex(8)
+#     _, f_ext = os.path.splitext(form_picture.filename)
+#     picture_fn = random_hex + f_ext
+#     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
 
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
+#     output_size = (125, 125)
+#     i = Image.open(form_picture)
+#     i.thumbnail(output_size)
+#     i.save(picture_path)
 
-    return picture_fn
+#     return picture_fn
 
 @main.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
     form = UpdateAccountForm()
     if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            current_user.profilepic = picture_file
-            current_user.username = form.username.data
-            current_user.email = form.email.data
-            db.session.add(pitch)
-            db.session.commit()
+            # if form.picture.data:
+            # picture_file = save_picture(form.picture.data)
+            # current_user.profilepic = picture_file
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.add(pitch)
+        db.session.commit()
         flash('Your account has been updated!', 'success')
-        return redirect(url_for('profile'))
+        return redirect(url_for('main.profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    profilepic = url_for('static', filename='profile_pics/' + current_user.profilepic)
-    return render_template('user.html', title='Profile', profilepic=profilepic, form=form)
+    return render_template('user.html', title='Profile', form=form)
