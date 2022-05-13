@@ -1,7 +1,7 @@
 {% extends "base.html" %} {%block content%}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pitches.css') }}">
 <!-- form for creating a new pitch -->
-{% block pitchcontent %}
+
 <div class="form-section font flex justify-center items-center mx-auto">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
@@ -38,7 +38,7 @@
         <div class="form-group col-auto">
             {{ form.submit(class="button") }}
         </div>
-{% endblock pitchcontent %}
+
   </div>
 </div>
 {% endblock %}

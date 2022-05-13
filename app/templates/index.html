@@ -1,19 +1,38 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-{% block content %}
-<div class="row">
-    <div class="col-md-3">
-      {% for pitch in pitch %}
-      <h1 class="">{{ pitch.title }}</h1>
-      <p>Author: {{ pitch.author.current_user }}</p>
-      <p>📌 {{ pitch.body }}</p>
-      <p>Posted on {{pitch.date_posted}}</p>
-      {% endfor %}
-      <!-- empty -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static', filename='css/index.css') }}"
+/>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
+
+  .font {
+    font-family: "Space Mono", monospace;
+  }
+  .form-section {
+    background-color: #101935;
+    height: 100vh;
+    width: 100vw;
+  }
+</style>
+{% block pitch %}
+<div>
+  {% for pitch in pitch %}
+  <div
+    class="card text-center w-75 mx-auto mt-5"
+    style="background-color: #564787; color: #DBCBD8;"
+  >
+    <div class="card-body">
+      <h5 class="card-title fs-3 fw-bolder">{{ pitch.title }}</h5>
+      <p class="card-text">📌 {{ pitch.body }}</p>
+      <a href="#" class="btn btn-primary">Upvote</a>
+      <div class="card-footer submit-btn">
+        <p>Posted on {{pitch.date_posted}}</p>
+      </div>
     </div>
-    <div class="col-md-6 mt-2 form">
-      <h4 class="text-center">Welcome to Pitchly</h4>
-    </div>
+  </div>
+  {% endfor %}
 </div>
-{% endblock %}
+{% endblock pitch %} {% endblock %}

@@ -17,30 +17,6 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <!-- <style>
-      @import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
-
-      .signup {
-        color: #101935;
-      }
-      .login {
-        color: #101935;
-
-      }
-      .font {
-        font-family: "Space Mono", monospace;
-      }
-      .form-section {
-        background-color: #101935;
-        height: 100vh;
-        width: 100vw;
-      }
-      .form-container {
-        border-radius: 40px;
-        background: linear-gradient(145deg, #564787, #dbcbd8);
-        box-shadow: 9px 9px 13px #564787, -9px -9px 13px #dbcbd8;
-      }
-    </style> -->
   </head>
   <body class="font">
     <div>
@@ -108,7 +84,7 @@
       </div>
       {% block content %} {%endblock content%}
     </div>
-    <div class="signup">{% block signup %} {%endblock%}</div>
+    <div class="signup">{% block signup %} {%endblock signup%}</div>
     <div class="login">{% block login %} {%endblock login%}</div>
     <div>{% block profile %} {%endblock profile %}</div>
     <script

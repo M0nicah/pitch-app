@@ -1,46 +1,45 @@
-{% extends "base.html" %}
-{% block signup%}
-    <div class="form-section font flex justify-center items-center mx-auto">
-        <form action="" method="POST">
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group form-container justify-center items-center w-96 h-96  p-5 mx-auto">
-                <h1 class="font-bold font text-xl text-center ">Register Here</h1>
-                <div class="form-group">
-                    {{ form.username.label(class="form-control-label") }}
+{% extends "base.html" %} {% block signup%}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signup.css') }}">
+<div class="form-section form-container font flex justify-center items-center mx-auto">
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group justify-center items-center w-96 h-96  p-5 mx-auto">
+            <h1 class="font-bold font text-xl text-center ">Register Here</h1>
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
 
-                    {%if form.username.errors%}
-                        {{ form.username(class="form-control form-control-md is-invalid") }}
-                        <div class="invalid-feedback">
-                            {%for error in form.username.errors %}
-                            <span>{{ error }}</span>
-                            {%endfor%}
-                        </div>
-                    {%else%}
-                        {{ form.username(class="form-control form-control-md") }}
-                    {%endif%}
-                </div>
-                <div class="form-group">
-                    {{ form.email.label(class="form-control-label") }}
-                    {{ form.email(class="form-control form-control-md") }}
-                </div>
-                <div class="form-group">
-                    {{ form.password.label(class="form-control-label") }}
-                    {{ form.password(class="form-control form-control-md") }}
-                </div>
-                <div class="form-group">
-                    {{ form.confirm_password.label(class="form-control-label") }}
-                    {{ form.confirm_password(class="form-control form-control-md") }}
-                </div>
-                <div class="form-group mt-3 submit-btn justify-center items-center ">
-                    {{form.submit_form(class="btn btn-outline-primary")}}
-                </div>
-            </fieldset>
-            <div class="text-center mt-2">
-                <small class="text-muted font-bold">
-                    Already Have an Account? <a href="{{url_for('main.login')}}">Login</a>
-                </small>
+                {%if form.username.errors%}
+                    {{ form.username(class="form-control form-control-md is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.username(class="form-control form-control-md") }}
+                {%endif%}
             </div>
-        </form>
-    </div>
-    
-{% endblock %}
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {{ form.email(class="form-control form-control-md") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {{ form.password(class="form-control form-control-md") }}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-control-label") }}
+                {{ form.confirm_password(class="form-control form-control-md") }}
+            </div>
+            <div class=" mt-3 ">
+                {{form.submit_form(class="submit-btn")}}
+            </div>
+        </fieldset>
+        <div class="text-center mt-2">
+            <small class="text-muted font-bold">
+                Already Have an Account? <a href="{{url_for('main.login')}}">Login</a>
+            </small>
+        </div>
+    </form>
+</div>
+{% endblock signup %}

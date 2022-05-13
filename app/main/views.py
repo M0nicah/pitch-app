@@ -44,14 +44,12 @@ def signup():
 
 @main.route("/login", methods=['GET', 'POST'])
 def login():
-    
     if current_user.is_authenticated:
         return redirect(url_for('main.index')) #prevents the user from double logging in
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user.email == form.email.data:
-            print(user)
             flash(f'Login Successfull', 'success')
             return redirect(url_for('main.index'))
     else:
@@ -70,7 +68,6 @@ def logout():
 
 
 @main.route('/pitch/new', methods=['GET', 'POST'] )
-@login_required
 def new_pitch():
     form=PitchForm()
     if form.validate_on_submit():
