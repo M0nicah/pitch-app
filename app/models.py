@@ -20,7 +20,6 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key =True)
     username = db.Column(db.String(100))
     email = db.Column(db.String(100))
-    # profilepic = db.Column(db.String(20), default='default.jpg')
     password_hash = db.Column(db.String(128))
     pitch = db.relationship('Pitch', backref='author', lazy=True)
 

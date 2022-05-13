@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 3b2465d4de76
+Revision ID: 20be686d0359
 Revises: 
-Create Date: 2022-05-11 15:28:57.304644
+Create Date: 2022-05-13 14:08:32.511384
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3b2465d4de76'
+revision = '20be686d0359'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,14 +22,14 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=100), nullable=True),
     sa.Column('email', sa.String(length=100), nullable=True),
-    sa.Column('password', sa.String(length=150), nullable=True),
+    sa.Column('password_hash', sa.String(length=128), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('pitch',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=True),
     sa.Column('date_posted', sa.DateTime(), nullable=True),
-    sa.Column('content', sa.Text(), nullable=True),
+    sa.Column('body', sa.Text(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
