@@ -1,5 +1,3 @@
-from turtle import title
-from click import confirm
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
